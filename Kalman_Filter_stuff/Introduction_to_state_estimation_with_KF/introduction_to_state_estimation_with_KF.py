@@ -1,6 +1,6 @@
 """
 example code for state estimation via Kalman Filter in case of free vibration
-@author: StructDynGuy
+@author: LC
 """
 
 import numpy as np
