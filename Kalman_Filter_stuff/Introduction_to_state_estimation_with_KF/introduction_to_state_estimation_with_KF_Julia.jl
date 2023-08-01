@@ -1,3 +1,8 @@
+"""
+example code for state estimation via Kalman Filter in case of free vibration
+@author: LC
+"""
+
 using LinearAlgebra
 using PyCall
 using Plots
