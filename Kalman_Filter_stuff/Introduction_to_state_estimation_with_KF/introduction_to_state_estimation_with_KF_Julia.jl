@@ -3,8 +3,6 @@ using PyCall
 using Plots
 using DelimitedFiles
 
-cd("C:/Users/lucag/OneDrive - Danmarks Tekniske Universitet/Skrivebord/Luigi_personal/blog_struct_dyn/intro_to_KF_estimation_code")
-
 function kalman_filter!(z_prev, P_prev, A, H, Q, R, d)
     #prediction step
     z_pred = A * z_prev
