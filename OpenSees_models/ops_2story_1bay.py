@@ -69,17 +69,18 @@ def define_model_2story(mass_1fact=1,mass_2fact=1,
     
     return freq,np.array(mode1),np.array(mode2)
 
-true_params = [1.1,0.9,0.84,1.05]
-print("true parameters: ", true_params)
-
-freq,mode1,mode2 = define_model_2story(mass_1fact=true_params[0],
-                                        mass_2fact=true_params[1],
-                                        stiff1_fact=true_params[2],
-                                        stiff2_fact=true_params[3],)
-
-opsvis.plot_model()
-
-opsvis.plot_mode_shape(1,)
-opsvis.plot_mode_shape(2,)
-
-print("periods :",1/freq)
+if __name__ == '__main__':
+    true_params = [1.1,0.9,0.84,1.05]
+    print("true parameters: ", true_params)
+    
+    freq,mode1,mode2 = define_model_2story(mass_1fact=true_params[0],
+                                            mass_2fact=true_params[1],
+                                            stiff1_fact=true_params[2],
+                                            stiff2_fact=true_params[3],)
+    
+    opsvis.plot_model()
+    
+    opsvis.plot_mode_shape(1,)
+    opsvis.plot_mode_shape(2,)
+    
+    print("periods :",1/freq)
