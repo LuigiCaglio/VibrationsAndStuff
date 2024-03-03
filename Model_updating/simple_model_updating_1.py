@@ -5,6 +5,8 @@ Created on Tue Feb 27 18:30:21 2024
 @author: LC
 
 code for post https://vibrationsandstuff.wordpress.com/2024/03/03/simple-model-updating-via-global-optimization/
+
+needs code for OpenSees model https://github.com/LuigiCaglio/VibrationsAndStuff/blob/main/OpenSees_models/ops_2story_1bay.py
 """
 
 import numpy as np
