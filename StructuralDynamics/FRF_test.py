@@ -80,6 +80,20 @@ Hc_acc  = np.vstack((
                 np.hstack((-np.identity(n)@inv(M)@K,      -np.identity(n)@inv(M)@C       ))
                 ))
 
+#direct feedthrough matrix
+Jc_disp = np.vstack((
+                np.zeros([len(np.identity(n)),nLoads]),
+                np.zeros([len(S_null),nLoads]),
+                S_null@inv(M)@Sp
+                ))
+
+#direct feedthrough matrix
+Jc_acc = np.vstack((
+                np.zeros([len(S_null),nLoads]),
+                np.zeros([len(S_null),nLoads]),
+                np.identity(n)@inv(M)@Sp
+                ))
+
 #%% compute FRFs
 omega_array = np.linspace(0.01,20*2*np.pi,1000)
 
@@ -137,14 +151,14 @@ def FRF_acc_modes(m,ζ,ω,φ,Spj,omega_array):
 
 
 
-def FRF_state_space(Ac,Bc,Hc,omega_array):
+def FRF_state_space(Ac,Bc,Hc,Jc,omega_array):
     H = np.zeros((len(Hc),Bc.shape[1],
                    len(omega_array)),
                    complex)
     I = np.eye(len(Ac))
     for ind,ω in enumerate(omega_array):
         temp_matr = 1j*ω*I- Ac 
-        H[:,:,ind] = Hc@inv(temp_matr)@Bc
+        H[:,:,ind] = Hc@inv(temp_matr)@Bc+Jc
     return H
 
 #MCK
@@ -156,8 +170,8 @@ Hdisp_modes = FRF_disp_modes(modal_mass,damping_ratios,omega,phi,Sp,omega_array)
 Hacc_modes = FRF_acc_modes(modal_mass,damping_ratios,omega,phi,Sp,omega_array)
 
 #state space
-H_disp_ss = FRF_state_space(Ac,Bc,Hcdisp,omega_array)
-Hacc_ss = FRF_state_space(Ac,Bc,Hc_acc,omega_array)
+H_disp_ss = FRF_state_space(Ac,Bc,Hcdisp,Jc_disp,omega_array)
+Hacc_ss = FRF_state_space(Ac,Bc,Hc_acc,Jc_acc,omega_array)
 
 
 
@@ -196,3 +210,7 @@ def compare_3FRFs(H_MCK,H_modes,H_ss,fr_array,title):
 fr_array = omega_array/2/np.pi
 compare_3FRFs(Hdisp_MCK[0],Hdisp_modes[0],H_disp_ss[0].flatten(),fr_array,title="FRF - displacement")
 compare_3FRFs(Hacc_MCK[0],Hacc_modes[0],Hacc_ss[0].flatten(),fr_array,title="FRF - acceleration")
+
+
+compare_3FRFs(Hdisp_MCK[1],Hdisp_modes[1],H_disp_ss[1].flatten(),fr_array,title="FRF DOF2 - displacement")
+compare_3FRFs(Hacc_MCK[1],Hacc_modes[1],Hacc_ss[1].flatten(),fr_array,title="FRF DOF2 - acceleration")
