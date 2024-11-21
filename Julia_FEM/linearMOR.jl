@@ -3,7 +3,9 @@ Created on Fri Nov 22 2024
 
 @author: LC
 https://vibrationsandstuff.wordpress.com/finite-element-stuff/
-
+Vibrations and Stuff
+Guyan reduction (a.k.a. static condensation) in Julia
+Craig-Bampton Method (a.k.a. dynamic condensation) in Julia
 """
 
 using LinearAlgebra
