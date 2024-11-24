@@ -17,11 +17,11 @@ mutable struct DispBeamColumn2D <: BeamColumnElement
     beamIntegration::BeamIntegration
     geomTransf::GeometricTransformation
 
-    #not necessary variables 
+    #response variables 
     Kb::Matrix{Float64} # stiffness
     Fb_trial::Vector{Float64} # forces
     Fb_committed::Vector{Float64}
-    ub_trial::Vector{Float64} # deformations
+    ub_trial::Vector{Float64} # displacements
     ub_committed::Vector{Float64}
 
     # basic to global transformation
