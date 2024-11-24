@@ -60,7 +60,7 @@ function state_determination!(ele::DispBeamColumn2D,Δug::Vector{Float64})
     wIP = ele.beamIntegration.wIP
 
     #compute basic displacement increment
-    Tbg = ele.Tbg
+    Tbg = Tbg!(geomTransf,node1,node2)
     Δub = Tbg * Δug
  
     #compute element length
