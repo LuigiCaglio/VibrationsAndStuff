@@ -60,11 +60,11 @@ function state_determination!(ele::DispBeamColumn2D,Δug::Vector{Float64})
     wIP = ele.beamIntegration.wIP
 
     #compute basic displacement increment
-    Tbg = Tbg!(ele.geomTransf,node1,node2)
+    Tbg = Tbg!(ele.geomTransf,ele.node1,ele.node2)
     Δub = Tbg * Δug
  
     #compute element length
-    L = norm(node2.crds-node1.crds)
+    L = norm(ele.node2.crds-ele.node1.crds)
 
     #initialize basic stiffness and force
     Kb = zeros(3,3)
@@ -76,7 +76,7 @@ function state_determination!(ele::DispBeamColumn2D,Δug::Vector{Float64})
 
         # Displacement interpolation evaluated at integration points
         x = 0.5*(xIP[i] + 1.0)*L #xIP ∈[-1,1] while x ∈[0,L]
-        Tsb =  compute_Tsb(ele1,x, L)
+        Tsb =  compute_Tsb(ele,x, L)
         
         Δus = Tsb*Δub # Section deformation increment
 
