@@ -80,11 +80,11 @@ function state_determination!(ele::ForceBeamColumn2D,
     wIP = ele.beamIntegration.wIP
 
     #compute basic displacement increment
-    Tbg = Tbg!(ele.geomTransf,node1,node2)
+    Tbg = Tbg!(ele.geomTransf,ele.node1,ele.node2) 
     Δub = Tbg * Δug
  
     #compute element length
-    L = norm(node2.crds-node1.crds)
+    L = norm(ele.node2.crds-ele.node1.crds)
 
     kb_imin1 = ele.Kb_trial #previous stiffness
     ΔFb_i = kb_imin1*Δub    #basic deformation increment
@@ -95,7 +95,7 @@ function state_determination!(ele::ForceBeamColumn2D,
     for j in 1:ele.beamIntegration.Np
         # Force interpolation evaluated at integration points
         x = 0.5*(xIP[j] + 1.0)*L #xIP ∈[-1,1] while x ∈[0,L]
-        Tsb =  compute_Tsb(ele1,x, L)
+        Tsb =  compute_Tsb(ele,x, L)
     
         section_j = ele.beamIntegration.sections[j]
 
@@ -124,7 +124,7 @@ function state_determination!(ele::ForceBeamColumn2D,
     #loop over the sections to update the unbalanced force
     for j in 1:ele.beamIntegration.Np
         x = 0.5*(xIP[j] + 1.0)*L #xIP ∈[-1,1] while x ∈[0,L]
-        Tsb =  compute_Tsb(ele1,x, L)
+        Tsb =  compute_Tsb(ele,x, L)
         section_j = ele.beamIntegration.sections[j]
 
         #update unbalanced section forces for next Newton iteration
